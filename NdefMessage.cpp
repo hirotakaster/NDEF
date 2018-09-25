@@ -3,6 +3,7 @@
 NdefMessage::NdefMessage(void)
 {
     _recordCount = 0;
+    _numBytes = 0;
 }
 
 NdefMessage::NdefMessage(const byte * data, const int numBytes)
@@ -14,6 +15,7 @@ NdefMessage::NdefMessage(const byte * data, const int numBytes)
     #endif
 
     _recordCount = 0;
+    _numBytes = numBytes;
 
     int index = 0;
 
@@ -83,6 +85,7 @@ NdefMessage::NdefMessage(const NdefMessage& rhs)
 {
 
     _recordCount = rhs._recordCount;
+    _numBytes = rhs._numBytes;
     for (unsigned int i = 0; i < _recordCount; i++)
     {
         _records[i] = rhs._records[i];
@@ -262,6 +265,11 @@ NdefRecord NdefMessage::operator[](int index)
 {
     return getRecord(index);
 }
+
+int NdefMessage::getNumBytes() {
+    return _numBytes;
+}
+
 
 #ifdef NDEF_USE_SERIAL
 void NdefMessage::print()
